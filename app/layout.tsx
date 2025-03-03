@@ -3,7 +3,10 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 
-const poppins = Poppins({ weight: ["300", "400", "500", "600", "700"] });
+const poppins = Poppins({ 
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin", "latin-ext"]
+});
 
 export const metadata: Metadata = {
   title: "DocsMind",
