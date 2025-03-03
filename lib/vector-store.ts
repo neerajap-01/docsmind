@@ -5,7 +5,8 @@ import { env } from "./config";
 
 export async function embedAndStoreDocs(
   client: Pinecone,
-  // @ts-ignore docs type error
+  // @ts-expect-error docs type error
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   docs: Document<Record<string, any>>[]
 ) {
   try {

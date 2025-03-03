@@ -1,4 +1,3 @@
-import Balancer from "react-wrap-balancer";
 import {
   Card,
   CardContent,
@@ -51,14 +50,14 @@ export function ChatLine({
           {role === "assistant" ? (
             <ReactMarkdown
               components={{
-                a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />,
-                p: ({ node, ...props }) => <p {...props} className="my-2" />,
-                ul: ({ node, ...props }) => <ul {...props} className="list-disc pl-6 my-2" />,
-                ol: ({ node, ...props }) => <ol {...props} className="list-decimal pl-6 my-2" />,
-                li: ({ node, ...props }) => <li {...props} className="my-1" />,
-                h1: ({ node, ...props }) => <h1 {...props} className="text-xl font-bold my-3" />,
-                h2: ({ node, ...props }) => <h2 {...props} className="text-lg font-bold my-3" />,
-                h3: ({ node, ...props }) => <h3 {...props} className="text-md font-bold my-2" />,
+                a: ({ ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />,
+                p: ({ ...props }) => <p {...props} className="my-2" />,
+                ul: ({ ...props }) => <ul {...props} className="list-disc pl-6 my-2" />,
+                ol: ({ ...props }) => <ol {...props} className="list-decimal pl-6 my-2" />,
+                li: ({ ...props }) => <li {...props} className="my-1" />,
+                h1: ({ ...props }) => <h1 {...props} className="text-xl font-bold my-3" />,
+                h2: ({ ...props }) => <h2 {...props} className="text-lg font-bold my-3" />,
+                h3: ({ ...props }) => <h3 {...props} className="text-md font-bold my-2" />,
               }}
             >
               {content}

@@ -15,7 +15,8 @@ type callChainArgs = {
   chatHistory: string;
 };
 
-// @ts-ignore docs type error
+// @ts-expect-error docs type error
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formatDocumentsAsString = (documents: Document<Record<string, any>>[]) => {
   return documents.map((document) => document.pageContent || document.text).join("\n\n");
 };
