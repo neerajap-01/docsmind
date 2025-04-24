@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { callChain } from "@/lib/langchain";
 import { Message } from "ai";
+import { fetchData } from "@/utils/fetchData";
+import { CHATENPOINT, SERVER } from "@/ contants/endpoints.contants";
 
 const formatMessage = (message: Message) => {
   return `${message.role === "user" ? "Human" : "Assistant"}: ${
@@ -25,10 +26,19 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const streamingTextResponse = await callChain({
-      question: lastMessage,
-      chatHistory: formattedPreviousMessages.join("\n"),
-    });
+    const streamingTextResponse = await fetchData(
+      SERVER,
+      CHATENPOINT.chatLLM(),
+      "post",
+      {
+        question: lastMessage,
+        chat_history: formattedPreviousMessages.join("\n"),
+      },
+      {},
+      {},
+      false,
+      true
+    )
     return streamingTextResponse;
   } catch (error) {
     console.error("Internal Server Error: ", error);
