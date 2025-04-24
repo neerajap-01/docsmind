@@ -1,6 +1,6 @@
 "use client";
 
-import { scrollToBottom, initialMessages, getSources } from "@/lib/utils";
+import { scrollToBottom, initialMessages, getSources } from "@/utils/core.utils";
 import React, { useEffect, useRef } from "react";
 import { ChatLine } from "../ChatBubble/chat-line";
 import { Input } from "../ui/input";
@@ -12,7 +12,7 @@ export function Chat() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const { messages, input, handleInputChange, handleSubmit, status, data } = useChat({
-    initialMessages,
+    initialMessages
   });
 
   useEffect(() => {

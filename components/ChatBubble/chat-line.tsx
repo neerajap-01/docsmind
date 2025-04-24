@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/accordion";
 import { Message } from "ai/react";
 import ReactMarkdown from "react-markdown";
-import { formattedText } from "@/lib/utils";
+import { formattedText } from "@/utils/core.utils";
 
 interface ChatLineProps extends Partial<Message> {
   sources: string[];
