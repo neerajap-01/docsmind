@@ -5,9 +5,7 @@ import { FileIcon, Loader2, UploadIcon, XIcon } from "lucide-react";
 import { cn } from "@/utils/core.utils";
 import { uploadMultipleFiles } from "@/services/upload.service";
 import { formatFileSize } from "@/utils/core.utils";
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, import/extensions
-import { useToast } from "@/hooks/use-toast.ts";
+import { useToast } from "@/hooks/use-toast";
 
 interface FileUploadProps {
   onFileProcessed: (filename: string) => void;
