@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Message } from "ai";
 import { fetchData } from "@/utils/fetchData";
-import { CHATENPOINT, SERVER } from "@/ contants/endpoints.contants";
+import { CHATENDPOINT, SERVER } from "@/contants/endpoints.contants";
 
 const formatMessage = (message: Message) => {
   return `${message.role === "user" ? "Human" : "Assistant"}: ${
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   try {
     const streamingTextResponse = await fetchData(
       SERVER,
-      CHATENPOINT.chatLLM(),
+      CHATENDPOINT.chatLLM(),
       "post",
       {
         question: lastMessage,
