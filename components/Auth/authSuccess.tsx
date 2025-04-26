@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/hooks/use-auth';
 
 enum AuthStatus {
   PROCESSING = 'processing',
@@ -20,11 +21,22 @@ export default function AuthSuccess() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
+  const { isLoggedIn, logout, login } = useAuth();
+  
+  useEffect(() => {
+    // Check if user is logged in
+    if (isLoggedIn) {
+      router.push('/admin');
+    } else {
+      logout(); // Log out the user if they are already logged in
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
   
   // Get query parameters from the URL
   const provider = searchParams.get('source');
-  // Check for token in cookies.
-  const token = document.cookie
+  // Check for token in params and then cookies.
+  const token = searchParams.get('token') ?? document.cookie
           .split('; ')
           .find(row => row.startsWith('auth_token='))
           ?.split('=')[1];
@@ -42,7 +54,7 @@ export default function AuthSuccess() {
           });
           return;
         }
-        
+        login(token);
         setStatus(AuthStatus.SUCCESS);
         setMessage(`Successfully authenticated with ${provider}`);
         
@@ -53,7 +65,7 @@ export default function AuthSuccess() {
         
         // Redirect to home page after a short delay
         setTimeout(() => {
-          router.push('/');
+          router.push('/admin');
         }, 1500);
       } catch (error) {
         console.error('Error during authentication process:', error);

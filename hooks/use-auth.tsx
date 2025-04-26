@@ -27,7 +27,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .split('; ')
       .find(row => row.startsWith('auth_token='))
       ?.split('=')[1];
-    
     if (token) {
       setIsLoggedIn(true);
     }

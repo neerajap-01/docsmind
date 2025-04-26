@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,8 @@ export default function AuthRouteLayout({
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
   const pathname = usePathname();
-  const { isLoggedIn, logout } = useAuth()
+  const { isLoggedIn, logout } = useAuth();
+  const sidebarRef = useRef<HTMLDivElement>(null);
   
   // Close sidebar when route changes on mobile
   useEffect(() => {
@@ -49,6 +50,24 @@ export default function AuthRouteLayout({
       setIsSidebarOpen(false);
     }
   }, [pathname, isMobile]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        isMobile && 
+        isSidebarOpen && 
+        sidebarRef.current && 
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsSidebarOpen(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobile, isSidebarOpen]);
   
   const navigationItems = [
     { name: "Dashboard", path: "/", icon: Home },
@@ -59,8 +78,8 @@ export default function AuthRouteLayout({
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+      <header className="sticky top-0 z-50 w-full flex justify-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between px-4 lg:px-0">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -73,13 +92,13 @@ export default function AuthRouteLayout({
             </Button>
             <Link href="/" className="flex items-center gap-2">
               <span className="bg-primary h-8 w-8 rounded-md flex items-center justify-center text-primary-foreground font-bold">AI</span>
-              <span className="text-xl font-bold hidden sm:inline-block">DocsMind</span>
+              <span className="text-xl font-bold inline-block">DocsMind</span>
             </Link>
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
             {!isLoggedIn && (
-              <div className="flex items-center gap-2">
+              <div className="items-center gap-2 hidden lg:flex">
                 <Button variant="ghost" asChild size="sm">
                   <Link href="/login">Login</Link>
                 </Button>
@@ -92,16 +111,20 @@ export default function AuthRouteLayout({
         </div>
       </header>
 
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 relative lg:max-h-[calc(100vh-4rem)]">
         {/* Sidebar - overlay on mobile, side panel on desktop */}
         <aside
+          ref={sidebarRef}
           className={cn(
-            "fixed inset-y-0 left-0 z-40 transform border-r bg-background transition-all duration-200 ease-in-out flex flex-col lg:translate-x-0 lg:static lg:h-auto",
+            "fixed inset-y-0 left-0 z-999999 transform border-r bg-background transition-all duration-200 ease-in-out flex flex-col lg:translate-x-0 lg:static lg:h-auto",
             isSidebarOpen ? "translate-x-0" : "-translate-x-full",
-            isSidebarCollapsed ? "w-[4.5rem]" : "w-64"
+            isSidebarCollapsed ? "w-[5rem]" : "w-64"
           )}
         >
-          <div className="flex h-16 items-center justify-between border-b px-4 lg:px-6">
+          <div className={cn(
+            "flex h-16 items-center border-b px-4 lg:px-6",
+            isSidebarCollapsed ? "justify-center" : "justify-between"
+          )}>
             {!isSidebarCollapsed && (
               <span className="text-lg font-semibold">Menu</span>
             )}
@@ -117,6 +140,20 @@ export default function AuthRouteLayout({
                   <span className="sr-only">Collapse sidebar</span>
                 </Button>
               )}
+              {/* Collapsed toggle button */}
+              {isSidebarCollapsed && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsSidebarCollapsed(false)}
+                  className="hidden lg:flex"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                  <span className="sr-only">Expand sidebar</span>
+                </Button>
+              )}
+
+              {/* Close button for mobile */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -128,20 +165,6 @@ export default function AuthRouteLayout({
               </Button>
             </div>
           </div>
-          
-          {/* Collapsed toggle button */}
-          {isSidebarCollapsed && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsSidebarCollapsed(false)}
-              className="hidden lg:flex mx-auto my-4"
-            >
-              <ChevronRight className="h-5 w-5" />
-              <span className="sr-only">Expand sidebar</span>
-            </Button>
-          )}
-          
           <nav className="p-4 space-y-1 flex-1">
             {navigationItems.map((item) => (
               <Link
@@ -204,7 +227,7 @@ export default function AuthRouteLayout({
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout} className="cursor-pointer">
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                   </DropdownMenuItem>
@@ -250,7 +273,7 @@ export default function AuthRouteLayout({
         )}
 
         {/* Main content */}
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-6 w-full">
           {children}
         </main>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +8,9 @@ import { Eye, EyeOff, Loader2, Github, Mail } from "lucide-react";
 import Link from "next/link";
 import { loginUserBFF } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
+import { env } from "@/lib/config";
+import GoogleIcon from "@/icons/google-icon";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -16,6 +19,17 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+  const { isLoggedIn, logout } = useAuth();
+  
+  useEffect(() => {
+    // Check if user is logged in
+    if (isLoggedIn) {
+      router.push('/admin');
+    } else {
+      logout(); // Log out the user if they are already logged in
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
 
   const validateEmail = (email: string): boolean => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -91,10 +105,16 @@ export function LoginForm() {
   }
 
   const handleSocialLogin = (provider: string) => {
-    toast({
-      title: `${provider} Login`,
-      description: `Login with ${provider} would happen here in a real app.`,
-    });
+    setIsLoading(true);
+        
+    // Get the base URL from an environment variable or hardcode it based on your setup
+    const baseURL = env.API_ENDPOINT;
+    
+    // Construct the OAuth URL
+    const authURL = `${baseURL}/api/auth/${provider.toLowerCase()}`;
+    
+    // Redirect to the OAuth provider
+    window.location.href = authURL;
   };
 
   return (
@@ -110,12 +130,7 @@ export function LoginForm() {
         {/* Social Login Options */}
         <div className="grid grid-cols-2 gap-3">
           <Button variant="outline" className="w-full" onClick={() => handleSocialLogin("Google")}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-              <path d="M9 3.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17Z" />
-              <path d="M13 9.5h5.5" />
-              <path d="M13 14.5h5.5" />
-              <path d="M13 19.5h5.5" />
-            </svg>
+            <GoogleIcon className="mr-2 h-4 w-4" />
             Google
           </Button>
           <Button variant="outline" className="w-full" onClick={() => handleSocialLogin("GitHub")}>

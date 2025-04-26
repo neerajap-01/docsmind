@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { BadgeCheck, AlertCircle, MailCheck, ArrowRight } from "lucide-react";
 import { verifyEmailBFF } from "@/services/auth.service";
+import { useRouter } from "next/router";
+import { useAuth } from "@/hooks/use-auth";
 
 enum VerificationStatus {
   LOADING = "loading",
@@ -21,6 +23,18 @@ export default function VerifyEmail() {
   const [message, setMessage] = useState("Verifying your email address...");
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const { isLoggedIn, logout } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in
+    if (isLoggedIn) {
+      router.push('/admin');
+    } else {
+      logout(); // Log out the user if they are already logged in
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
   
   useEffect(() => {
     const controller = new AbortController();

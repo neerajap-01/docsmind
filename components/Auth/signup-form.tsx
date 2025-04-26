@@ -8,6 +8,9 @@ import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { registerUserBFF } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { env } from "@/lib/config";
+import { useAuth } from "@/hooks/use-auth";
+import GoogleIcon from "@/icons/google-icon";
 
 export function SignupForm() {
   const [name, setName] = useState("");
@@ -18,6 +21,14 @@ export function SignupForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+  const { isLoggedIn, logout } = useAuth();
+
+  useEffect(() => {
+    // Check if user is logged in
+    if (isLoggedIn) {
+      router.push('/admin');
+    }
+  }, [isLoggedIn, router]);
 
   const validateEmail = (email: string): boolean => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -112,10 +123,16 @@ export function SignupForm() {
   }
 
   const handleSocialSignup = (provider: string) => {
-    toast({
-      title: `${provider} Signup`,
-      description: `Signup with ${provider} would happen here in a real app.`,
-    });
+    setIsLoading(true);
+    
+    // Get the base URL from an environment variable or hardcode it based on your setup
+    const baseURL = env.API_ENDPOINT;
+    
+    // Construct the OAuth URL
+    const authURL = `${baseURL}/api/auth/${provider.toLowerCase()}`;
+    
+    // Redirect to the OAuth provider
+    window.location.href = authURL;
   };
 
   return (
@@ -130,16 +147,11 @@ export function SignupForm() {
       <CardContent className="space-y-4">
         {/* Social Signup Options */}
         <div className="grid grid-cols-2 gap-3">
-          <Button variant="outline" className="w-full" onClick={() => handleSocialSignup("Google")}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-              <path d="M9 3.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17Z" />
-              <path d="M13 9.5h5.5" />
-              <path d="M13 14.5h5.5" />
-              <path d="M13 19.5h5.5" />
-            </svg>
+          <Button variant="outline" className="w-full" onClick={() => handleSocialSignup("google")}>
+            <GoogleIcon className="mr-2 h-4 w-4" />
             Google
           </Button>
-          <Button variant="outline" className="w-full" onClick={() => handleSocialSignup("GitHub")}>
+          <Button variant="outline" className="w-full" onClick={() => handleSocialSignup("github")}>
             <Github className="mr-2 h-4 w-4" />
             GitHub
           </Button>

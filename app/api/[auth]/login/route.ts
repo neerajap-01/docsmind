@@ -17,7 +17,20 @@ export async function POST(req: NextRequest) {
       }
     );
     
-    return NextResponse.json(res);
+      // Parse the JSON data from the response
+      const data: any = await res.json();
+  
+      // Create a NextResponse with the data
+      const nextResponse = NextResponse.json(data);
+
+      const setCookieHeader = res.headers.get("set-cookie");
+
+      if (setCookieHeader) {
+        nextResponse.headers.append("Set-Cookie", setCookieHeader);
+      }
+
+      // Return the NextResponse
+      return nextResponse;
   } catch (error) {
     console.error("Internal Server Error: ", error);
     return NextResponse.json("Error: Something went wrong. Try again!", {

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, CheckCircle2, Key, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 
 enum ResetStatus {
   VALIDATING = "validating", // Checking if token is valid
@@ -31,6 +32,17 @@ export default function ResetPassword() {
   const router = useRouter();
   const { toast } = useToast();
   const token = searchParams.get("token");
+  const { isLoggedIn, logout } = useAuth();
+
+  useEffect(() => {
+    // Check if user is logged in
+    if (isLoggedIn) {
+      router.push('/admin');
+    } else {
+      logout(); // Log out the user if they are already logged in
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
 
   // Validate token on component mount
   useEffect(() => {

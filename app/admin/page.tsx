@@ -104,9 +104,9 @@ const Admin = () => {
   return (
     <AuthRouteLayout>
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Admin Control Panel</h1>
+        <h1 className="text-3xl font-bold">Admin Control Panel</h1>
         
-        <Tabs defaultValue="file-processing" className="space-y-6">
+        <Tabs defaultValue="file-processing" className="space-y-6 mt-4">
           <TabsList>
             <TabsTrigger value="file-processing">File Processing</TabsTrigger>
             <TabsTrigger value="processed-files">Processed Files</TabsTrigger>

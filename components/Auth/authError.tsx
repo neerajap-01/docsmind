@@ -1,18 +1,31 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, use } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/hooks/use-auth';
 
 export default function AuthError() {
   const searchParams = useSearchParams();
   const [errorSource, setErrorSource] = useState<string>('authentication');
   const [errorMessage, setErrorMessage] = useState<string>('An error occurred during authentication.');
   const { toast } = useToast();
+  const { isLoggedIn, logout } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in
+    if (isLoggedIn) {
+      router.push('/admin');
+    } else {
+      logout(); // Log out the user if they are already logged in
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
   
   const source = searchParams.get('source') || 'unknown';
   const message = searchParams.get('message');
