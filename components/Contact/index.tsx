@@ -68,6 +68,7 @@ export default function Contact() {
       // setSubject('');
       // setMessage('');
     } catch (error) {
+      console.error("Error sending message: ", error);
       toast({
         title: "Something went wrong",
         description: "Please try again later",
@@ -320,7 +321,6 @@ export default function Contact() {
                 </p>
               </CardContent>
             </Card>
-            
             <Card>
               <CardHeader>
                 <CardTitle>What file formats are supported?</CardTitle>
@@ -331,7 +331,6 @@ export default function Contact() {
                 </p>
               </CardContent>
             </Card>
-            
             <Card>
               <CardHeader>
                 <CardTitle>Is my data secure?</CardTitle>

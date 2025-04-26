@@ -65,6 +65,7 @@ export function LoginForm() {
         description: "An error occurred while logging in. Please try again.",
         variant: "destructive"
       });
+      console.error("Login error: ", error);
     } finally {
       setIsLoading(false);
     }
@@ -101,6 +102,7 @@ export function LoginForm() {
         description: "An error occurred while logging in. Please try again.",
         variant: "destructive"
       });
+      console.error("Login error: ", error);
     }
   }
 

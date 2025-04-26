@@ -43,7 +43,7 @@ const processStreamedProgress = async (
       }
 
       const data = new TextDecoder().decode(value);
-      const { filename, totalChunks, chunksUpserted, isComplete } = JSON.parse(data);
+      const { filename, totalChunks, chunksUpserted } = JSON.parse(data);
       const currentProgress = Math.round((chunksUpserted / totalChunks) * 100);
       setProgress(currentProgress);
       // setFilename(`${filename} [${chunksUpserted}/${totalChunks}]`)
@@ -148,6 +148,7 @@ export function FileUpload({ onFileProcessed, mode }: FileUploadProps) {
         variant: "destructive",
       });
       setIsUploading(false);
+      console.error("Error uploading file: ", error);
     }
   };
 

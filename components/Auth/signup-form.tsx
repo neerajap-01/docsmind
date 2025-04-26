@@ -21,7 +21,7 @@ export function SignupForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     // Check if user is logged in
@@ -77,6 +77,7 @@ export function SignupForm() {
     try {
       await handleEmailSignup();
     } catch (error) {
+      console.error("Error during signup: ", error);
       toast({
         title: "Signup failed",
         description: "An error occurred while signing up. Please try again.",
@@ -114,6 +115,7 @@ export function SignupForm() {
         });
       }
     } catch (error) {
+      console.error("Error during signup: ", error);
       toast({
         title: "Signup Error",
         description: "An error occurred during email signup.",
