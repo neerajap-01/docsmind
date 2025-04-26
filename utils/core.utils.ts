@@ -50,3 +50,27 @@ export const getSources = (data: JSONValue[], role: string, index: number) => {
 export function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
+
+export const formatFileSize = (bytes: number): string => {
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let size = bytes;
+  let unitIndex = 0;
+
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  // Round to 2 decimal places if MB or GB, whole numbers for B and KB
+  const formattedSize = unitIndex > 1 ? size.toFixed(2) : Math.round(size);
+  return `${formattedSize} ${units[unitIndex]}`;
+};
+
+export const getBaseUrl = () => {
+  // Check if we're running on the client side
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+  // Default value for server-side
+  return process.env.NEXT_PUBLIC_BASE_URL || '';
+};
