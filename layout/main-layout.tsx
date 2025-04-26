@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
@@ -41,6 +41,7 @@ export default function AuthRouteLayout({
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
   const pathname = usePathname();
+  const router = useRouter();
   const { isLoggedIn, logout } = useAuth();
   const sidebarRef = useRef<HTMLDivElement>(null);
   
@@ -50,6 +51,13 @@ export default function AuthRouteLayout({
       setIsSidebarOpen(false);
     }
   }, [pathname, isMobile]);
+
+  //Check if user is logged in
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.replace("/login");
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
