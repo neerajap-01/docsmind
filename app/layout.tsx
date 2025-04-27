@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/theme/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/hooks/use-auth";
 
 const poppins = Poppins({ 

@@ -64,7 +64,7 @@ export default function NotFound() {
                 
                 <div className="pt-4 border-t">
                   <Button variant="ghost" asChild className="w-full">
-                    <Link href="javascript:history.back()">
+                    <Link href="/">
                       <ArrowLeft className="mr-2 h-4 w-4" />
                       Go Back
                     </Link>

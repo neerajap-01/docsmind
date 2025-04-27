@@ -12,7 +12,7 @@ import { env } from "@/lib/config";
 import { useAuth } from "@/hooks/use-auth";
 import GoogleIcon from "@/icons/google-icon";
 
-export function SignupForm() {
+const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -255,4 +255,6 @@ export function SignupForm() {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default SignupForm;

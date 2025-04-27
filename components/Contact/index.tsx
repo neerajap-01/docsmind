@@ -175,28 +175,28 @@ export default function Contact() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Link 
-                  href="/docs" 
+                  href="/" // Replace with actual documentation link /docs
                   className="flex items-center justify-between p-3 rounded-md hover:bg-secondary/50 transition-colors"
                 >
                   <span>Documentation</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link 
-                  href="/faq" 
+                  href="/"  // Replace with actual FAQ link /faq
                   className="flex items-center justify-between p-3 rounded-md hover:bg-secondary/50 transition-colors"
                 >
                   <span>Frequently Asked Questions</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link 
-                  href="/pricing" 
+                  href="/" // Replace with actual pricing link /pricing
                   className="flex items-center justify-between p-3 rounded-md hover:bg-secondary/50 transition-colors"
                 >
                   <span>Pricing Plans</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link 
-                  href="/blog" 
+                  href="/" // Replace with actual blog link /blog
                   className="flex items-center justify-between p-3 rounded-md hover:bg-secondary/50 transition-colors"
                 >
                   <span>Blog & Updates</span>
@@ -298,7 +298,8 @@ export default function Contact() {
                 )}
               </CardContent>
               <CardFooter className="text-sm text-muted-foreground border-t p-4">
-                Your information is securely processed in accordance with our <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+                {/* Replace the href to /privacy */}
+                Your information is securely processed in accordance with our <Link href="/" className="text-primary hover:underline">Privacy Policy</Link>.
               </CardFooter>
             </Card>
           </div>
@@ -355,7 +356,7 @@ export default function Contact() {
           </div>
           
           <div className="text-center mt-12">
-            <Link href="/faq">
+            <Link href="/"> {/* Replace with actual FAQ link */}
               <Button variant="outline">
                 View All FAQs
                 <ArrowRight className="ml-2 h-4 w-4" />

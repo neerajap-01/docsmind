@@ -1,15 +1,9 @@
 "use client";
 
 import { Chat } from "@/components/Chat/Chat";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
 import AuthRouteLayout from "@/layout/main-layout";
-// import { ThemeToggle } from "@/theme/theme-toggle";
-// import Link from "next/link";
 
 export default function Home() {
-  // const { isLoggedIn } = useAuth();
-
   return (
     <AuthRouteLayout>
       <main className="relative flex min-h-screen flex-col items-center justify-between">
