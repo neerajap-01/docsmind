@@ -4,7 +4,7 @@ import { fetchData } from '@/utils/fetchData';
 
 // Configure options for this API route
 export const dynamic = 'force-dynamic';
-export const maxDuration = 300; // 5 minutes timeout for file uploads
+export const maxDuration = 60; // 5 minutes timeout for file uploads
 
 export async function POST(req: NextRequest) {
   try {
