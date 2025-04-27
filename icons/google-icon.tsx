@@ -9,7 +9,7 @@ interface GoogleIconProps extends React.SVGProps<SVGSVGElement> {
 const GoogleIcon: React.FC<GoogleIconProps> = ({
   size = 24,
   className = "",
-  fill = "#fff", // default to white
+  fill = "currentColor", // default to white
   ...props
 }) => (
   <svg
