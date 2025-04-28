@@ -18,8 +18,7 @@ const AUTHROUTES = {
   logout: () => `/auth/logout`,
 }
 
-// const SERVER = `${env.API_ENDPOINT}/api`;
-const SERVER = `http://localhost:3000/api`;
+const SERVER = `${env.API_ENDPOINT}/api`;
 
 export {
   SERVER,
