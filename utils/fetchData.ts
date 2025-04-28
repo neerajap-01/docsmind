@@ -4,7 +4,7 @@ interface Config {
   method: string;
   headers: {
     'Content-Type'?: string;
-    Authorization: string;
+    Authorization?: string;
   };
   body?: FormData | string | undefined | any;
   signal?: AbortSignal;
@@ -40,7 +40,7 @@ export const fetchData = async (
   let config: Config = {
     method, 
     headers: {
-      Authorization: `Bearer `,
+      // Authorization: `Bearer `,
     },
     body: undefined
   };
