@@ -63,7 +63,7 @@ export const fetchData = async (
     let newHeaders = Object.assign({}, optionalHeaders);
     config.headers = {
       ...config.headers,
-      ...newHeaders
+      // ...newHeaders
     };
   }
 
