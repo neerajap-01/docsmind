@@ -5,10 +5,6 @@ interface Config {
   headers: {
     'Content-Type'?: string;
     Authorization: string;
-    credentials: string;
-    'Access-Control-Allow-Origin': string;
-    'Access-Control-Allow-Methods': string;
-    'Access-Control-Allow-Credentials': string;
   };
   body?: FormData | string | undefined | any;
   signal?: AbortSignal;
@@ -44,11 +40,7 @@ export const fetchData = async (
   let config: Config = {
     method, 
     headers: {
-      Authorization: `Bearer ${authToken}`,
-      credentials: 'omit',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Credentials': 'true'
+      Authorization: `Bearer ${authToken !== 'Bearer' ? '' : authToken}`,
     },
     body: undefined
   };
