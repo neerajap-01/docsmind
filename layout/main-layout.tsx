@@ -37,11 +37,10 @@ export default function AuthRouteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
   const pathname = usePathname();
-  const router = useRouter();
   const { isLoggedIn, logout } = useAuth();
   const sidebarRef = useRef<HTMLDivElement>(null);
   
@@ -51,13 +50,6 @@ export default function AuthRouteLayout({
       setIsSidebarOpen(false);
     }
   }, [pathname, isMobile]);
-
-  //Check if user is logged in
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace("/login");
-    }
-  }, [isLoggedIn]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -198,7 +190,7 @@ export default function AuthRouteLayout({
           
           {/* Profile section at bottom */}
           <div className={cn(
-            "p-4 border-t flex",
+            "p-4 border-t flex z-999999",
             isSidebarCollapsed ? "justify-center" : "items-center"
           )}>
             {isLoggedIn ? (

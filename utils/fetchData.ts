@@ -12,6 +12,7 @@ interface Config {
   };
   body?: FormData | string | undefined | any;
   signal?: AbortSignal;
+  parsedData?: boolean;
 }
 
 export const fetchData = async (
@@ -23,7 +24,8 @@ export const fetchData = async (
   optionalHeaders: object = {},
   isMultipart: boolean = false,
   isStreaming: boolean = false,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  parsedData: boolean = true,
 ) => {
   let authToken = '';
   if (typeof window !== 'undefined') {
@@ -91,7 +93,8 @@ export const fetchData = async (
 
   // Otherwise process as JSON as before
   try {
-    const data = await response.json();
+
+    const data = parsedData ? await response.json() : response;
     return data;
   } catch (err: unknown) {
     if (err instanceof Error && err.name === 'AbortError') {

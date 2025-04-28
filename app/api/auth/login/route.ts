@@ -14,7 +14,11 @@ export async function POST(req: NextRequest) {
       {},
       {
         "Authorization": `Bearer ${req.headers.get("Authorization")}`,
-      }
+      },
+      false,
+      false,
+      undefined,
+      false
     );
     
     // Parse the JSON data from the response
@@ -24,7 +28,6 @@ export async function POST(req: NextRequest) {
 
     // Create a NextResponse with the data
     const nextResponse = NextResponse.json(data);
-
     const setCookieHeader = res.headers.get("set-cookie");
 
     if (setCookieHeader) {

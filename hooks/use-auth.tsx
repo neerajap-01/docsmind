@@ -29,6 +29,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ?.split('=')[1];
     if (token) {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+      router.push('/login'); // Redirect to login if not logged in
     }
   }, []);
 
