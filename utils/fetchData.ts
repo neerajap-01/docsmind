@@ -23,14 +23,14 @@ export const fetchData = async (
   signal?: AbortSignal,
   parsedData: boolean = true,
 ) => {
-  let authToken = '';
-  if (typeof window !== 'undefined') {
-    const token = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('auth_token='))
-      ?.split('=')[1];
-    authToken = token || '';
-  }
+  // let authToken = '';
+  // if (typeof window !== 'undefined') {
+  //   const token = document.cookie
+  //     .split('; ')
+  //     .find(row => row.startsWith('auth_token='))
+  //     ?.split('=')[1];
+  //   authToken = token || '';
+  // }
   let queryString = '';
   if (Object.keys(query).length > 0) {
     queryString = '?' + new URLSearchParams(query as Record<string, string>).toString();
@@ -40,7 +40,7 @@ export const fetchData = async (
   let config: Config = {
     method, 
     headers: {
-      Authorization: `Bearer ${authToken !== 'Bearer' ? '' : authToken}`,
+      Authorization: `Bearer `,
     },
     body: undefined
   };
