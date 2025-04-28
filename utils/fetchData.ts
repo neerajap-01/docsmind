@@ -80,8 +80,14 @@ export const fetchData = async (
   } else if ((method === 'post' || method === 'put') && isMultipart === true) {
     config.body = body;
   }
+  console.log('<------------ targetURL data ------------->');
+  console.log('targetURL: ', targetURL);
+  console.log('<------------ config data ------------->');
+  console.log('config: ', config);
   const response = await fetch(targetURL, config);
-  
+  console.log('<------------ response data ------------->')
+  console.log('response: ', response);
+  console.log('<------------ response data ------------->')
   if (response.status === 404) {
     console.error('404 : API not found');
   }
@@ -93,8 +99,10 @@ export const fetchData = async (
 
   // Otherwise process as JSON as before
   try {
-
+    
     const data = parsedData ? await response.json() : response;
+    console.log("<------------ parsedData data ------------->")
+    console.log("data: ", data);
     return data;
   } catch (err: unknown) {
     if (err instanceof Error && err.name === 'AbortError') {
