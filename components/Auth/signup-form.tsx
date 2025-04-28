@@ -127,11 +127,10 @@ const SignupForm = () => {
   const handleSocialSignup = (provider: string) => {
     setIsLoading(true);
     
-    // Get the base URL from an environment variable or hardcode it based on your setup
-    const baseURL = env.API_ENDPOINT;
-    
-    // Construct the OAuth URL
-    const authURL = `${baseURL}/api/auth/${provider.toLowerCase()}`;
+    // Create a proper URL object to handle URL construction
+    const baseURL = new URL(env.API_ENDPOINT);
+    const authPath = `/api/auth/${provider.toLowerCase()}`;
+    const authURL = new URL(authPath, baseURL).toString();
     
     // Redirect to the OAuth provider
     window.location.href = authURL;
