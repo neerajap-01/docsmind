@@ -72,5 +72,5 @@ export const getBaseUrl = () => {
     return window.location.origin;
   }
   // Default value for server-side
-  return process.env.NEXT_PUBLIC_BASE_URL || '';
+  return process.env.BASE_URL || '';
 };

@@ -7,6 +7,9 @@ const envSchema = z.object({
   API_ENDPOINT: z.string().trim().min(1).default(
     process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:3000'
   ),
+  BASE_URL: z.string().trim().min(1).default(
+    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  ),
 });
 
 export const env = envSchema.parse(process.env);
