@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, CheckCircle2, Key, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/use-auth";
 
 enum ResetStatus {
   VALIDATING = "validating", // Checking if token is valid
@@ -29,20 +28,8 @@ export default function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
   
   const searchParams = useSearchParams();
-  const router = useRouter();
   const { toast } = useToast();
   const token = searchParams.get("token");
-  const { isLoggedIn, logout } = useAuth();
-
-  useEffect(() => {
-    // Check if user is logged in
-    if (isLoggedIn) {
-      router.push('/admin');
-    } else {
-      logout(); // Log out the user if they are already logged in
-      router.push('/login');
-    }
-  }, [isLoggedIn, router]);
 
   // Validate token on component mount
   useEffect(() => {

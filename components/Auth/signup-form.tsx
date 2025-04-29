@@ -9,7 +9,6 @@ import { useToast } from "@/hooks/use-toast";
 import { registerUserBFF } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { env } from "@/lib/config";
-import { useAuth } from "@/hooks/use-auth";
 import GoogleIcon from "@/icons/google-icon";
 
 const SignupForm = () => {
@@ -21,14 +20,6 @@ const SignupForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-  const { isLoggedIn } = useAuth();
-
-  useEffect(() => {
-    // Check if user is logged in
-    if (isLoggedIn) {
-      router.push('/admin');
-    }
-  }, [isLoggedIn, router]);
 
   const validateEmail = (email: string): boolean => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { BadgeCheck, AlertCircle, MailCheck, ArrowRight } from "lucide-react";
 import { verifyEmailBFF } from "@/services/auth.service";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
 
 enum VerificationStatus {
@@ -23,18 +22,7 @@ export default function VerifyEmail() {
   const [message, setMessage] = useState("Verifying your email address...");
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const { isLoggedIn, logout } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    // Check if user is logged in
-    if (isLoggedIn) {
-      router.push('/admin');
-    } else {
-      logout(); // Log out the user if they are already logged in
-      router.push('/login'); // Redirect to login page
-    }
-  }, [isLoggedIn, router]);
+  // const { isLoading, isLoggedIn, logout } = useAuth();
   
   useEffect(() => {
     const controller = new AbortController();
@@ -178,6 +166,20 @@ export default function VerifyEmail() {
         );
     }
   };
+
+  // const redirectToLogin = useCallback(() => {
+  //   logout()
+  // }, [isLoggedIn]);
+
+  // if(isLoading) {
+  //   return (
+  //     <>Loading...</>
+  //   )
+  // };
+
+  // if (!isLoggedIn) {
+  //   redirectToLogin();
+  // }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4 bg-background">

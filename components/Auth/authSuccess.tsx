@@ -21,17 +21,7 @@ export default function AuthSuccess() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  const { isLoggedIn, logout, login } = useAuth();
-  
-  useEffect(() => {
-    // Check if user is logged in
-    if (isLoggedIn) {
-      router.push('/admin');
-    } else {
-      logout(); // Log out the user if they are already logged in
-      router.push('/login');
-    }
-  }, [isLoggedIn, router]);
+  const { login } = useAuth();
   
   // Get query parameters from the URL
   const provider = searchParams.get('source');
