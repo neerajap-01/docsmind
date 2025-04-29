@@ -1,5 +1,4 @@
-import url from 'url';
-
+// This function is used to fetch data from a server using the Fetch API.
 interface Config {
   method: string;
   headers: {
@@ -23,14 +22,14 @@ export const fetchData = async (
   signal?: AbortSignal,
   parsedData: boolean = true,
 ) => {
-  // let authToken = '';
-  // if (typeof window !== 'undefined') {
-  //   const token = document.cookie
-  //     .split('; ')
-  //     .find(row => row.startsWith('auth_token='))
-  //     ?.split('=')[1];
-  //   authToken = token || '';
-  // }
+  let authToken = '';
+  if (typeof window !== 'undefined') {
+    const token = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('auth_token='))
+      ?.split('=')[1];
+    authToken = token || '';
+  }
   let queryString = '';
   if (Object.keys(query).length > 0) {
     queryString = '?' + new URLSearchParams(query as Record<string, string>).toString();
@@ -40,7 +39,7 @@ export const fetchData = async (
   let config: Config = {
     method, 
     headers: {
-      // Authorization: `Bearer `,
+      Authorization: `Bearer `,
     },
     body: undefined
   };
@@ -63,7 +62,7 @@ export const fetchData = async (
     let newHeaders = Object.assign({}, optionalHeaders);
     config.headers = {
       ...config.headers,
-      // ...newHeaders
+      ...newHeaders
     };
   }
 
@@ -72,14 +71,12 @@ export const fetchData = async (
   } else if ((method === 'post' || method === 'put') && isMultipart === true) {
     config.body = body;
   }
-  console.log('<------------ targetURL data ------------->');
-  console.log('targetURL: ', targetURL);
-  console.log('<------------ config data ------------->');
-  console.log('config: ', config);
+
+  if(config.headers.Authorization === 'Bearer Bearer') {
+    delete config.headers.Authorization;
+  }
+
   const response = await fetch(targetURL, config);
-  console.log('<------------ response data ------------->')
-  console.log('response: ', response);
-  console.log('<------------ response data ------------->')
   if (response.status === 404) {
     console.error('404 : API not found');
   }
@@ -91,10 +88,7 @@ export const fetchData = async (
 
   // Otherwise process as JSON as before
   try {
-    
     const data = parsedData ? await response.json() : response;
-    console.log("<------------ parsedData data ------------->")
-    console.log("data: ", data);
     return data;
   } catch (err: unknown) {
     if (err instanceof Error && err.name === 'AbortError') {

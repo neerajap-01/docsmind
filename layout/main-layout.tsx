@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   Menu, 
   X, 
@@ -19,15 +19,15 @@ import {
 } from "lucide-react";
 import { cn } from "@/utils/core.utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuGroup,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
 
 import { ThemeToggle } from "@/theme/theme-toggle";
 import { useAuth } from "@/hooks/use-auth";
@@ -194,45 +194,63 @@ export default function AuthRouteLayout({
             isSidebarCollapsed ? "justify-center" : "items-center"
           )}>
             {isLoggedIn ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className={cn(
+              <Link href="/login" className="w-full">
+                <Button 
+                  variant="ghost" 
+                  className={cn(
                     "cursor-pointer",
                     isSidebarCollapsed ? "p-0" : "w-full justify-start"
-                  )}>
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src="/placeholder.svg" alt="User" />
-                      <AvatarFallback>U</AvatarFallback>
-                    </Avatar>
-                    {!isSidebarCollapsed && (
-                      <span className="ml-2 text-sm font-medium">User Profile</span>
-                    )}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem asChild>
-                      <Link href="/profile" className="cursor-pointer">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/settings" className="cursor-pointer">
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout} className="cursor-pointer">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  )}
+                  onClick={logout}
+                >
+                  <LogOut className="h-8 w-8" />
+                  {!isSidebarCollapsed && (
+                    <span className="ml-2 text-sm font-medium">Logout</span>
+                  )}
+                </Button>
+              </Link>
+              // <DropdownMenu>
+              //   <DropdownMenuTrigger asChild>
+              //     <Button 
+              //       variant="ghost" 
+              //       className={cn(
+              //         "cursor-pointer",
+              //         isSidebarCollapsed ? "p-0" : "w-full justify-start"
+              //       )}
+              //     >
+              //       <Avatar className="h-8 w-8">
+              //         <AvatarImage src="/placeholder.svg" alt="User" />
+              //         <AvatarFallback>U</AvatarFallback>
+              //       </Avatar>
+              //       {!isSidebarCollapsed && (
+              //         <span className="ml-2 text-sm font-medium">User Profile</span>
+              //       )}
+              //     </Button>
+              //   </DropdownMenuTrigger>
+              //   <DropdownMenuContent align="end" className="w-56">
+              //     <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              //     <DropdownMenuSeparator />
+              //     <DropdownMenuGroup>
+              //       <DropdownMenuItem asChild>
+              //         <Link href="/profile" className="cursor-pointer">
+              //           <User className="mr-2 h-4 w-4" />
+              //           <span>Profile</span>
+              //         </Link>
+              //       </DropdownMenuItem>
+              //       <DropdownMenuItem asChild>
+              //         <Link href="/settings" className="cursor-pointer">
+              //           <Settings className="mr-2 h-4 w-4" />
+              //           <span>Settings</span>
+              //         </Link>
+              //       </DropdownMenuItem>
+              //     </DropdownMenuGroup>
+              //     <DropdownMenuSeparator />
+              //     <DropdownMenuItem onClick={logout} className="cursor-pointer">
+              //       <LogOut className="mr-2 h-4 w-4" />
+              //       <span>Log out</span>
+              //     </DropdownMenuItem>
+              //   </DropdownMenuContent>
+              // </DropdownMenu>
             ) : (
               <div className={cn(
                 "space-y-2",
