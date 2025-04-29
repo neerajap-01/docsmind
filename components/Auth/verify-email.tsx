@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { BadgeCheck, AlertCircle, MailCheck, ArrowRight } from "lucide-react";
 import { verifyEmailBFF } from "@/services/auth.service";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
 
 enum VerificationStatus {
@@ -32,7 +32,7 @@ export default function VerifyEmail() {
       router.push('/admin');
     } else {
       logout(); // Log out the user if they are already logged in
-      router.push('/login');
+      router.push('/login'); // Redirect to login page
     }
   }, [isLoggedIn, router]);
   
